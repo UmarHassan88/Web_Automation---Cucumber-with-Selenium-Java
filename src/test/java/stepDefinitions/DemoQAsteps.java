@@ -7,76 +7,70 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import pages.ImplementedFunctions;
 
 import java.time.Duration;
 
-public class DemoQAsteps {
-    WebDriver driver = new ChromeDriver();
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    By elem = By.className("card-body");
-    //By forms = By.xpath("/html/body/div[2]/div/div/div/div[1]/div/div/div[2]/span/div");
-    By textbox = By.xpath("/html/body/div[2]/div/div/div/div[1]/div/div/div[1]/div/ul/li[1]");
-    By webtablesLoc = By.id("item-3");
-    By fullName = By.id("userName");
-    By email = By.id("userEmail");
-    By currentAddress = By.id("currentAddress");
-    By permanentAddress = By.id("permanentAddress");
-    By submitButt = By.id("submit");
+public class DemoQAsteps extends ImplementedFunctions {
+    WebDriver driver;
+    WebDriverWait wait;
 
-    public void setup(){
-        driver.get("https://demoqa.com/");
-    }
-
-    public void textboxComponent() throws InterruptedException {
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(elem));
-        Assert.assertEquals(element.getText(),"Elements");
-        element.click();
-        System.out.println("Elements Clicked!");
-        Thread.sleep(2000);
-
-        Thread.sleep(2000);
-        WebElement textBx = wait.until(ExpectedConditions.elementToBeClickable(textbox));
-        Assert.assertEquals(textBx.getText(),"Text Box");
-        textBx.click();
-        System.out.println("Text Box Clicked!");
-        //WebElement webTables = wait.until(ExpectedConditions.elementToBeClickable(webtablesLoc));
-        //webTables.click();
-
-        //Input the fields
-        WebElement name = wait.until(ExpectedConditions.elementToBeClickable(fullName));
-        name.sendKeys("TestUser");
-        WebElement emailInput = wait.until(ExpectedConditions.elementToBeClickable(email));
-        emailInput.sendKeys("TestUser@gmail.com");
-        WebElement currAddress = wait.until(ExpectedConditions.elementToBeClickable(currentAddress));
-        currAddress.sendKeys("Al Reem Island Abu Dhabi");
-        WebElement perAddress = wait.until(ExpectedConditions.elementToBeClickable(permanentAddress));
-        perAddress.sendKeys("Al Reem Island Abu Dhabi");
-        Thread.sleep(2000);
-        WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(submitButt));
-        submit.submit();
-    }
-
+    //1st Test Case
     @Given("The user is on the homepage")
-    public void whenHome(){
+    public void whenHome() throws InterruptedException {
         setup();
     }
     @When("The user clicks Elements")
-    public void clickElements() throws InterruptedException {
+    public void clickCheckbox() throws InterruptedException {
         textboxComponent();
     }
     @Then("Input the Text")
-    public void inputData() {
-       WebElement textBox = wait.until(ExpectedConditions.elementToBeClickable(textbox));
-        textBox.click();
+    public void navigate() {
+        navigateBack();
     }
 
     @Then("Quit the Window")
-    public void quitWindow() throws InterruptedException {
-        Thread.sleep(2000);
-        driver.quit();
+    public void quitWin() throws InterruptedException {
+        quitWindow();
+    }
+
+    //2nd Test Case
+    @Given("The user is on the homepage at checkbox")
+    public void whenCheckbox() throws InterruptedException {
+        setup();
+    }
+    @When("The user marks the checkbox")
+    public void clickElements() throws InterruptedException {
+        checkBoxImplementation();
+    }
+    @Then("Navigate Back")
+    public void inputData() {
+        navigateBack();
+    }
+
+
+    //3rd Test Case
+    @Given("The user is on Homepage at Web Tables")
+    public void givenWebTables() throws InterruptedException {
+        setup();
+    }
+
+    @When("Implement the Web Tables functionalities")
+    public void whenWebTables(){
+        webTablesImplementation();
+    }
+
+    @Then("Trigger the Actions and Check the Edit and Delete Functionalities")
+    public void thenWebTables() throws InterruptedException {
+        //Editing a Web Table
+        webtablesActions();
+
     }
 }
+
